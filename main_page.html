@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DTS | DIRECT. THE. SHOT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'League Spartan', sans-serif;
+      background: #050505;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .background {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.08), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(255,255,255,0.04), transparent 25%),
+        #050505;
+      z-index: -1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 8%;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      background: rgba(5,5,5,0.75);
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      color: #8ec5ff;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #8ec5ff;
+    }
+
+    .portfolio {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      margin-bottom: 60px;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 10px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .portfolio::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .portfolio::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 3px;
+    }
+
+    .portfolio::-webkit-scrollbar-thumb {
+      background: rgba(142,197,255,0.3);
+      border-radius: 3px;
+    }
+
+    .portfolio::-webkit-scrollbar-thumb:hover {
+      background: rgba(142,197,255,0.5);
+    }
+
+    .portfolio-item {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      transition: 0.25s ease;
+      flex: 0 0 350px;
+      height: 600px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .portfolio-item:hover {
+      border-color: rgba(142,197,255,0.4);
+      transform: translateY(-6px);
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .portfolio-item.error {
+      background: rgba(255,100,100,0.1);
+      border-color: rgba(255,100,100,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 350px;
+      color: rgba(255,150,150,0.8);
+      text-align: center;
+      padding: 20px;
+    }
+
+    .privacy-section {
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .privacy-section h3 {
+      font-size: 1.5rem;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #8ec5ff;
+    }
+
+    .privacy-section p {
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 15px;
+    }
+
+    .privacy-section ul {
+      color: rgba(255,255,255,0.75);
+      margin-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    .privacy-section li {
+      margin-bottom: 10px;
+    }
+
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 8%;
+    }
+
+    .hero-content {
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.95;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .buttons {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 16px 32px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    .primary {
+      background: white;
+      color: black;
+    }
+
+    .primary:hover {
+      transform: translateY(-3px);
+      background: #d9ecff;
+    }
+
+    .secondary {
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .secondary:hover {
+      transform: translateY(-3px);
+      border-color: #8ec5ff;
+      color: #8ec5ff;
+    }
+
+    section {
+      padding: 120px 8%;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      font-weight: 800;
+    }
+
+    .section-sub {
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 50px;
+      font-size: 1.1rem;
+    }
+
+    .packages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 30px;
+      transition: 0.25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(142,197,255,0.4);
+    }
+
+    .card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: #8ec5ff;
+    }
+
+    .card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.4;
+    }
+
+    .featured {
+      border: 1px solid #8ec5ff;
+      box-shadow: 0 0 35px rgba(142,197,255,0.15);
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .stat-box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 25px;
+      border-radius: 20px;
+    }
+
+    .stat-box h2 {
+      font-size: 2.5rem;
+      color: #8ec5ff;
+      margin-bottom: 5px;
+    }
+
+    footer {
+      padding: 40px 8%;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <header>
+    <div class="logo">DTS<span>.</span></div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#packages">Packages</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#privacy">Privacy</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>DIRECT.<br>THE.<br>SHOT</h1>
+
+      <p>
+        UAE-based sports photography and media coverage focused on basketball, football, athletes, and modern sports content.
+      </p>
+
+      <div class="buttons">
+        <a href="#packages" class="btn primary">View Packages</a>
+        <a href="#contact" class="btn secondary">Book DTS</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <h2 class="section-title">Recent Work</h2>
+    <p class="section-sub">Sample photography from our latest sessions.</p>
+
+    <div class="portfolio">
+      <div class="portfolio-item" id="portfolio-item-1">
+        <img 
+          src="Layup_Khalifa_Park.jpg" 
+          alt="Layup at Khalifa Park" 
+          onerror="handleImageError(this)"
+          onload="handleImageSuccess(this)"
+        >
+      </div>
+
+      <div class="portfolio-item" id="portfolio-item-2">
+        <img 
+          src="WASSUP_KHALIFA_PARK.jpg" 
+          alt="WASSUP Khalifa Park" 
+          onerror="handleImageError(this)"
+          onload="handleImageSuccess(this)"
+        >
+      </div>
+
+      <div class="portfolio-item" id="portfolio-item-3">
+        <img 
+          src="IMG_3.jpg" 
+          alt="Khalifa Park - Shot 3" 
+          onerror="handleImageError(this)"
+          onload="handleImageSuccess(this)"
+        >
+      </div>
+
+      <div class="portfolio-item" id="portfolio-item-4">
+        <img 
+          src="IMG_4.jpg" 
+          alt="Khalifa Park - Shot 4" 
+          onerror="handleImageError(this)"
+          onload="handleImageSuccess(this)"
+        >
+      </div>
+
+      <div class="portfolio-item" id="portfolio-item-5">
+        <img 
+          src="IMG_5.jpg" 
+          alt="Khalifa Park - Shot 5" 
+          onerror="handleImageError(this)"
+          onload="handleImageSuccess(this)"
+        >
+      </div>
+    </div>
+  </section>
+
+  <section id="packages">
+    <h2 class="section-title">Packages</h2>
+    <p class="section-sub">Photography and sports media coverage by DTS.</p>
+
+    <div class="packages">
+
+      <div class="card">
+        <h3>Basic Package</h3>
+        <div class="price">25 AED</div>
+
+        <ul>
+          <li>5 edited photos</li>
+          <li>Sports action shots</li>
+          <li>Fast delivery</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Standard Package</h3>
+        <div class="price">50 AED</div>
+
+        <ul>
+          <li>10 edited photos</li>
+          <li>Action coverage</li>
+          <li>Enhanced edits</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>MVP Package</h3>
+        <div class="price">90 AED</div>
+
+        <ul>
+          <li>20 edited photos</li>
+          <li>Premium sports edits</li>
+          <li>Player-focused shots</li>
+        </ul>
+      </div>
+
+      <div class="card featured">
+        <h3>Club Package</h3>
+        <div class="price">200 AED</div>
+
+        <ul>
+          <li>Up to 4 sessions monthly</li>
+          <li>Match & training coverage</li>
+          <li>Short-form clips</li>
+          <li>Media day coverage</li>
+          <li>Team/player content</li>
+          <li>48–72 hour delivery</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about">
+
+      <div class="about-text">
+        <h2 class="section-title">About DTS</h2>
+
+        <p>
+          DTS (DIRECT. THE. SHOT) is a sports photography and media brand focused on capturing athletes, moments, and competitive energy.
+          
+          Built around modern sports culture, DTS creates action photography, short-form content, athlete edits, and team coverage for basketball and football.
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat-box">
+          <h2>Sports</h2>
+          <p>Basketball & Football</p>
+        </div>
+
+        <div class="stat-box">
+          <h2>UAE</h2>
+          <p>Based in Abu Dhabi</p>
+        </div>
+
+        <div class="stat-box">
+          <h2>DTS</h2>
+          <p>DIRECT. THE. SHOT</p>
+        </div>
+
+        <div class="stat-box">
+          <h2>Media</h2>
+          <p>Photos, Clips & Content</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Book DTS</h2>
+    <p class="section-sub">For bookings, team coverage, and athlete content.</p>
+
+    <div class="card" style="max-width: 600px; margin: auto; text-align: center;">
+      <h3>Contact</h3>
+      <br>
+      <p style="color: rgba(255,255,255,0.7); line-height: 1.7;">
+        Instagram: @dtsprods<br>
+        Email: dtsprods@outlook.com<br>
+        Phone Number: (+971) 55 118 1709<br>
+        Abu Dhabi, United Arab Emirates
+      </p>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="privacy-section">
+      <h2 class="section-title">Privacy Policy & Photo Rights</h2>
+
+      <h3>Photo Ownership & Usage</h3>
+      <p>
+        All photos and media content captured by DTS (DIRECT. THE. SHOT) remain the intellectual property of DTS unless otherwise agreed in writing.
+      </p>
+
+      <h3>Your Rights</h3>
+      <ul>
+        <li><strong>Deletion Request:</strong> You have the right to request deletion of your photos or images at any time. Please contact us with your request.</li>
+        <li><strong>Usage Consent:</strong> By booking DTS services, you grant permission for photos to be used for portfolio, social media, and marketing purposes unless explicitly stated otherwise.</li>
+        <li><strong>Commercial Use:</strong> If you wish to use photos commercially or for purposes outside of personal use, additional licensing or fees may apply.</li>
+      </ul>
+
+      <h3>Contacting Us About Your Photos</h3>
+      <p>
+        To request photo deletion, usage modifications, or to discuss photo rights:
+      </p>
+      <ul>
+        <li>Instagram: @dtsprods</li>
+        <li>Email: dtsprods@outlook.com</li>
+        <li>Phone: (+971) 55 118 1709</li>
+      </ul>
+
+      <h3>Data & Privacy</h3>
+      <p>
+        DTS may collect contact information during bookings (name, email, phone number). This information is used solely for service delivery and communication purposes. We do not share your data with third parties without consent.
+      </p>
+
+      <h3>Photo Retention</h3>
+      <p>
+        Edited and delivered photos are retained for your records. If you request deletion, we will remove photos from our portfolio and archives within 7 business days. Note: Photos already shared publicly on social media may require separate requests to platforms.
+      </p>
+
+      <h3>Last Updated</h3>
+      <p>May 2026</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 DTS — DIRECT. THE. SHOT
+  </footer>
+
+  <script>
+    function handleImageError(imgElement) {
+      // Log the error for debugging
+      console.error('Image failed to load:', imgElement.src);
+      
+      // Find parent portfolio item
+      const portfolioItem = imgElement.closest('.portfolio-item');
+      
+      // Clear the image element
+      imgElement.remove();
+      
+      // Add error class and error message
+      portfolioItem.classList.add('error');
+      portfolioItem.innerHTML = `
+        <div>
+          <p style="margin: 0; color: rgba(255,150,150,0.8);">
+            ⚠️ Image failed to load<br>
+            <small style="font-size: 0.9rem; opacity: 0.8;">File: ${imgElement.alt}</small>
+          </p>
+        </div>
+      `;
+    }
+
+    function handleImageSuccess(imgElement) {
+      // Log successful load for debugging
+      console.log('Image loaded successfully:', imgElement.src);
+      imgElement.closest('.portfolio-item').style.borderColor = 'rgba(142,197,255,0.2)';
+    }
+
+    // Preload check - verify image exists on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.portfolio-item img');
+      images.forEach(img => {
+        // If image fails to load within 5 seconds, show error
+        const timeout = setTimeout(() => {
+          if (!img.complete) {
+            handleImageError(img);
+          }
+        }, 5000);
+
+        img.addEventListener('load', () => clearTimeout(timeout));
+        img.addEventListener('error', () => clearTimeout(timeout));
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "dts-photography",
+  "version": "1.0.0",
+  "description": "DTS - DIRECT. THE. SHOT | Professional Sports Photography Portfolio",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "photography",
+    "sports",
+    "portfolio",
+    "abu-dhabi",
+    "uae"
+  ],
+  "author": "DTS Photography",
+  "license": "All Rights Reserved"
+}
