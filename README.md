@@ -61,20 +61,6 @@ Professional sports photography and media coverage website for DTS (DIRECT. THE.
 - Social links
 - Comprehensive Privacy Policy & Photo Rights
 
-## 🚀 Deployment
-
-### GitHub Pages
-1. Push to GitHub repository
-2. Enable GitHub Pages in repository settings
-3. Choose `main` branch as source
-4. Website will be live at `https://dts-photography.github.io`
-
-### Other Hosting Options
-- Netlify
-- Vercel
-- Firebase Hosting
-- Any static hosting provider
-
 ## 📧 Contact
 
 - **Email**: dtsprods@outlook.com
